@@ -31,16 +31,6 @@ function GameDashCtrl($scope, $routeParams, $location, ParseService) {
 
     }
 
-    /*
-  // Perform user signup using back-end service
-	$scope.signUp = function() {
-		ParseService.signUp($scope.signup_username, $scope.signup_password, function(user) {
-      // When service call is finished, navigate to items page
-      $location.path('/items');
-    });
-	}
-
-*/
     $scope.init();
 }
 GameDashCtrl.$inject = ['$scope', '$routeParams', '$location', 'ParseService']
