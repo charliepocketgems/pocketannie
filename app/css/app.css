@@ -1,22 +1,35 @@
 /* app css stylesheet */
 
 body {
-  padding-top: 20px;
+  /*padding-top: 20px;*/
   min-width:1024px;
 }
 
 #header_container {
     width:100%;
-    /*border: 2px solid green;*/
-
+    height: 70px;
+    border-bottom: 2px solid rgb(12,79,87);
+    background-color: rgb(18,122,134);
     position:relative;
 }
 
 #title {
     font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Arial, Helvetica, sans-serif;
     font-weight: 100; letter-spacing: 1px;
-    font-size:80px;
+    font-size:50px;
     margin-left:50px;
+    color: white;
+    width: 500px;
+    height: 100%;
+    float: left;
+    position: relative;
+}
+
+#nav {
+    width:800px;
+    height: 100%;
+    float:right;
+
 }
 
 #logOutBtn {
