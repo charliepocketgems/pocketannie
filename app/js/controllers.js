@@ -103,37 +103,11 @@ function MainCtrl($scope, $location, ParseService) {
 
     //console.log('user to get data for: ' + $scope.userToFetch.email);
 
-    var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
-
-    var questionStrings =
-        ['I have little interest or please in doing things',
-            'I feel down and depressed and hopeless',
-            'I have trouble with sleep',
-            'I have been feeling tired and have little energy',
-            'I have a poor appetite ',
-            'I feel guilty or bad about myself',
-            'I have trouble concentrating',
-            'I feel weighed down and slow',
-            'I would be better off dead or hurting myself',
-            'I have lots of interest or please in doing things',
-            'I feel up and bright and hopeful',
-            'I have been sleeping well',
-            'I have been feeling active and have lots of energy',
-            'I am eating the right amount of food',
-            'I feel positive and good about myself',
-            'I can concentrate well',
-            'I do not feel weighed down or slow',
-            'I do not want to hurt or kill myself'
-        ];
-
-    var chartDates = [];
-    var chartValues = [];
 
     ///*temporarily comment this out for offline dev
     ParseService.getAnswers($scope.userToFetch.email, function(results) {
         //console.log(results);
-        
+
 
 
     });
