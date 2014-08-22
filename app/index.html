@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <title>Pocket Annie Dashboard</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/game-dash.css">
-  <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/ng-grid.min.css">
   <script src="lib/angular/angular.js"></script>
   <script src="lib/angular/angular-resource.js"></script>
@@ -17,6 +17,7 @@
   <script src="lib/underscore-min.js"></script>
   <script src="lib/colorbrewer.js"></script>
   <script src="lib/ui-bootstrap-tpls-0.10.0.js"></script>
+  <script src="lib/bootstrap.min.js"></script>
   <script src="js/app.js"></script>
   <script src="js/controllers.js"></script>
   <script src="js/services.js"></script>
@@ -28,21 +29,40 @@
   -->
 
 </head>
-<body>
-    <div id="header_container">
+
+<script>
+
+
+    // on scroll,
+    $(window).on('scroll',function(){
+
+    // we round here to reduce a little workload
+    stop = Math.round($(window).scrollTop());
+    if (stop > 100) {
+        $("#header_container").addClass('past-main');
+        $("#title").addClass('past-main');
+        $("li").addClass('past-main');
+        $("#searchform").addClass('past-main');
+    } else {
+        $("#header_container").removeClass('past-main');
+        $("#title").removeClass('past-main');
+        $("li").removeClass('past-main');
+        $("#searchform").removeClass('past-main');
+   }
+
+});
+</script>
+<body data-spy="scroll" data-target="#header_container">
+    <div id="header_container" data-spy="affix" data-offset-top="0">
         <div id="title">Pocket Annie</div>
 
-        <div id="nav">
-
-
-
-
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Market Trends</a></li>
+        <div id="navbar" class="cl-effect-4">
+              <ul class="nav">
+                <li><a href="#">Market Trends</a></li>
                 <li><a href="#">Game Compare</a></li>
 
               </ul>
-              <form class="navbar-form navbar-left" role="search">
+              <form id="searchform" class="navbar-form" role="search">
                 <div class="form-group">
                   <input type="text" class="form-control" placeholder="Search">
                 </div>
@@ -53,6 +73,15 @@
 
 
     </div>
+
+    <!---->
+    <!--<nav class="cl-effect-4">-->
+        <!--<a href="#">Beleaguer</a>-->
+        <!--<a href="#">Lassitude</a>-->
+        <!--<a href="#">Murmurous</a>-->
+        <!--<a href="#">Palimpsest</a>-->
+        <!--<a href="#">Assemblage</a>-->
+    <!--</nav>-->
 
 
 
