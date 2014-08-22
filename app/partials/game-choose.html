@@ -31,6 +31,7 @@
         <table id="table-left" class="table table-striped">
 	    <tr ng-repeat="cg in chosen_games">
 		<td>{{cg}}</td>
+		<td ng-click="remove(cg)">Remove</td>
 	    </tr>
 	</table> 
        <!--<div class="gridStyle" ng-grid="gridOptions"></div>-->

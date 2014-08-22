@@ -118,6 +118,7 @@ function GameSelectCtrl($scope, $location, ParseService) {
 	}
      }
    }
+
    $scope.append = function(game_name) {
 	//game_name = $('autocomplete').value();
 	if($scope.chosen_games.indexOf(game_name) == -1) {
@@ -126,6 +127,10 @@ function GameSelectCtrl($scope, $location, ParseService) {
 	}
 	//$scope.apply();
    }
+
+   $scope.remove = function(game_name) {
+     $scope.chosen_games.splice($scope.chosen_games.indexOf(game_name), 1);
+  }	
 }
 GameSelectCtrl.$inject = ['$scope', '$location', 'ParseService']
 
