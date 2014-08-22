@@ -18,6 +18,7 @@ angular.module('pocketAnnieAppServices', ['ngResource'])
 
     // Define parse model and collection for Answer records
     var Answer = Parse.Object.extend("Answer");
+    var GameMetrics = Parse.Object.extend("GameMetrics");
     var AnswerCollection = Parse.Collection.extend({ model:Answer });
 
 
@@ -84,11 +85,33 @@ angular.module('pocketAnnieAppServices', ['ngResource'])
         });
       },*/
 
+      getAvgInstalls : function getRequests(callback, gamename, device, country) {
+        var query = new Parse.Query(GameMetrics);
+        var device = 'iphone';
+        var country = 'JP'
+        var gamename = 'Sky Adventure';
+
+        query.equalTo("device", device);
+        query.equalTo("country", country);
+        query.equalTo("game", gamename);
+
+        query.find({
+            success : function(results) {
+                console.log(results);
+                callback(results);
+                //console.log(results);
+            },
+            error: function(error) {
+                alert("Error: " + error.message);
+            }
+        });
+      },
+
       // Get all of current user's answers
       getAnswers : function getRequests(userToFetch, callback) {
 
         var query = new Parse.Query(Answer);
-        //var userToFetch = 'kathleen.crosier@gmail.com';
+        var userToFetch = 'kathleen.crosier@gmail.com';
         var dateLimit = new Date("February 11, 2014 00:00:00");
 
         query.equalTo("userid", userToFetch);
@@ -107,6 +130,10 @@ angular.module('pocketAnnieAppServices', ['ngResource'])
                 alert("Error: " + error.message);
             }
         });
+
+
+
+
 
           /*
 

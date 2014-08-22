@@ -254,8 +254,18 @@ function GameDashCtrl($scope, $routeParams, $location, ParseService) {
             $scope.gameName =$routeParams.param1;
         }
 
+       // $scope.getAvgInstalls = ParseService.getAvgInstalls();
+
 
     }
+    $scope.getAvgInstallsfunc = function() {
+      ParseService.getAvgInstalls( function(results) {
+        $scope.$apply(function() {
+          $scope.getAvgInstalls = results[0].get('avginstalls');
+        })
+      })
+    }
+    $scope.getAvgInstallsfunc();
   var yAxisMargin =30;
 
  $(function () {
@@ -539,7 +549,7 @@ $('#container1').highcharts({
     $scope.init();
 
 }
-GameDashCtrl.$inject = ['$scope', '$routeParams', '$location', 'ParseService']
+GameDashCtrl.$inject = ['$scope', '$routeParams', '$location', 'ParseService', ];
 
 
 /**
