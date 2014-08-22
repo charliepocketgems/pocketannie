@@ -8,11 +8,13 @@ angular.module('pocketAnnieAppServices', ['ngResource'])
     //the first value is the app id, the second is the javascript key
     Parse.initialize("QwKn1yu5LIpW9aLQJ9xEPqPJEx2hoWdc7VB1SRcB", "avobHSj1OTlvwUGofHr7g29tOs0dtfCFVruGy6hs");
 
-    // Cache current logged in user
-    var loggedInUser;
+    // Cache game titles
+    var gameTitles=[];
 
-    // Cache list of user's answers
-    var myAnswers = [];
+
+    // Define parse model and collection for GameMonthly records
+    var GameTitles = Parse.Object.extend("GameTitles");
+    var GameTitlesCollection = Parse.Collection.extend({model:GameTitles});
 
     // Define parse model and collection for Answer records
     var Answer = Parse.Object.extend("Answer");
@@ -28,37 +30,37 @@ angular.module('pocketAnnieAppServices', ['ngResource'])
     var ParseService = {
       name: "Parse",
 
-      // Login a user
-      login : function login(username, password, callback) {
-    	  Parse.User.logIn(username, password, {
-    	    success: function(user) {
-            loggedInUser = user;
-    	      callback(user);
-    	    },
-    	    error: function(user, error) {
-    	      alert("Error: " + error.message);
-    	    }
-        });
+      getGameTitles : function getGameTitles(callback) {
+
+        if(gameTitles.length==0)  {
+            var query = new Parse.Query(GameTitles);
+            query.descending("rev");
+            query.limit(1000);
+            query.find({
+               success : function(results) {
+                for (var i=0; i<results.length; i++)
+                {
+                    gameTitles[i]  = results[i].get('game');
+                }
+                    //console.log(gameTitles);
+                    callback(gameTitles);
+               },
+                error: function(error) {
+                    alert("Error: " + error.message);
+                }
+            });
+        }
+        else {
+            callback(gameTitles);
+        }
+
+
+
       },
 
-        /*
-      // Register a user
-      signUp : function signUp(username, password, callback) {
-      	Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
-            success: function(user) {
-                loggedInUser = user;
-                callback(user);
-            },
-
-            error: function(user, error) {
-              alert("Error: " + error.message);
-            }
-        });
-      },*/
-
-      // Logout current user
-      logout : function logout(callback) {
-        Parse.User.logOut();
+      getGameData : function getGameData(title, callback) {
+        var query = new Parse.query(GameMonthly);
+        //query.
       },
 
         /*
@@ -142,22 +144,12 @@ angular.module('pocketAnnieAppServices', ['ngResource'])
           });
         }
         */
-      },
-
-
-
-      // Get current logged in user
-      getUser : function getUser() {
-          loggedInUser=Parse.User.current();
-          if(loggedInUser) {
-          console.log('user is currently: '+ loggedInUser.get('username'));
-            return loggedInUser;
-        }
-        else {
-            console.log('user not logged in');
-        }
       }
-    
+
+
+
+
+
     };
 
     // The factory function returns ParseService, which is injected into controllers.
