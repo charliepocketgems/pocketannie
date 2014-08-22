@@ -2,16 +2,38 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:300,400,700|Raleway:400,300,700);
 
 body {
-  /*padding-top: 20px;*/
-  min-width:1024px;
-  height:2000px;
-  font-family: 'Raleway', sans-serif;
+    /*padding-top: 20px;*/
+    min-width:1024px;
+    font-family: 'Raleway', sans-serif;
+
+}
+
+#subview {
+    /*margin-top: 100px;*/
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    /*margin-bottom: 100px;*/
+    margin: 100px auto 100px auto;
+    width:90%;
 }
 
 .affix {
     top:0px;
 }
 
+#header_background {
+    background-color:#cccccc;
+    -webkit-filter: blur(3px);
+    filter: blur(3px);
+    width:100%;
+    height:100%;
+    position:absolute;
+}
+
+#header_background.past-main {
+    background-color: #eeeeee;
+
+}
 
 #header_container {
     width:100%;
@@ -19,13 +41,14 @@ body {
     /*border-bottom: 2px solid rgb(12,79,87);*/
     background-color: #cccccc;
     transition: all 0.25s ease;
+    z-index:10000;
     /*position:relative;*/
 }
 
 #header_container.past-main {
     background-color: #eeeeee;
     height: 50px;
-
+    opacity: 0.9;
 }
 
 #title {
@@ -47,17 +70,18 @@ body {
 }
 
 #navbar {
-    width:600px;
+    width:650px;
     height: 100%;
     float:right;
-
 
 }
 
 #searchform {
     margin-top:16px;
+    margin-right:20px;
     float:right;
     transition: all 0.25s ease;
+    z-index:200;
 }
 
 #searchform.past-main {
