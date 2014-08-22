@@ -15,6 +15,7 @@
 <div id="game_select">
 <span>Type Game:</span>
 <autocomplete ng-model="g_name" data="g_names" on-type="suggest()"></autocomplete>
+<input type="submit" value="Select" ng-click="append(g_name)"/>
 <!--<input type="text" ng-model="g_name" ng-change="suggest()"><br/>
 <p style="background-color: #ff0; width:10%; padding:5px; margin:1px; display:none;" ng-repeat="game in game_names | filter:g_name">{{game}}</p> 
 <span>Select Game:</span>
@@ -27,7 +28,11 @@
     <!--<p ng-show="myAnswers.length == 0">You have no answers</p>-->
       <!--<div ng-show="myAnswers.length > 0">-->
        <div>
-
+        <table id="table-left" class="table table-striped">
+	    <tr ng-repeat="cg in chosen_games">
+		<td>{{cg}}</td>
+	    </tr>
+	</table> 
        <!--<div class="gridStyle" ng-grid="gridOptions"></div>-->
 
 
