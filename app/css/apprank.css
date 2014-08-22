@@ -1,0 +1,37 @@
+
+.class2 {
+    width: 460px;
+    height:90px;
+    padding: 10px;
+    box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
+    margin: 0px; 
+}
+
+.chart5 {
+	 position: relative;
+	 float: left;
+	 top:50px;
+	 width: 1400px;
+	 left:100px;
+    height:500px;
+    padding: 10px;
+    margin: 10px 10px 10px 10px;
+    box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
+    clear: left;
+
+}
+
+
+.chart6 {
+	 position: relative;
+	 float: left;
+	 top:50px;
+	 width: 1400px;
+	 left:100px;
+    height:500px;
+    padding: 10px;
+    margin: 10px 10px 10px 10px;
+    box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
+    clear: left;
+
+}
