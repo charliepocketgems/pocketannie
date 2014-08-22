@@ -14,9 +14,10 @@
 <hr>
 <div id="game_select">
 <span>Type Game:</span>
-<input type="text" ng-model="g_name" ng-change="suggest()"><br/>
+<autocomplete ng-model="g_name" data="g_names" on-type="suggest()"></autocomplete>
+<!--<input type="text" ng-model="g_name" ng-change="suggest()"><br/>
 <p style="background-color: #ff0; width:10%; padding:5px; margin:1px; display:none;" ng-repeat="game in game_names | filter:g_name">{{game}}</p> 
-<!--<span>Select Game:</span>
+<span>Select Game:</span>
 <select ng-model="gameToFetch" ng-change="display()" ng-options="g for g in game_names"></select>
 --></div>
 <h3 style='margin-left:50px; clear:both; position:relative;'>Chosen Games</h3>

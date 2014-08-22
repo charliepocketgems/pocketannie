@@ -3,7 +3,7 @@
 /* App Module */
 
 
-angular.module('pocketannie', ['ngRoute', 'ngGrid', 'pocketAnnieAppServices', 'ui.bootstrap']).
+angular.module('pocketannie', ['autocomplete', 'ngRoute', 'ngGrid', 'pocketAnnieAppServices', 'ui.bootstrap']).
   config(['$routeProvider', function($routeProvider) {
   $routeProvider.
   	  when('/dashboard', {templateUrl: 'partials/main-dash.html',   controller: MainCtrl}).
