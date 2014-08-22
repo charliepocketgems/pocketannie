@@ -1,0 +1,155 @@
+<div id="header_container">
+    <span id="title">Games Dashboard</span>
+    <!-- Split button -->
+  <!--  <div id="logOutBtn" class="btn-group">
+
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">{{displayName}} <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#" ng-click="logout()">Sign Out</a></li>
+      </ul>
+    </div> -->
+
+</div>
+<hr>
+<div id="game_select">
+<span>Type Game:</span>
+<input type="text" ng-model="g_name" ng-change="suggest()"><br/>
+<p style="background-color: #ff0; width:10%; padding:5px; margin:1px; display:none;" ng-repeat="game in game_names | filter:g_name">{{game}}</p> 
+<!--<span>Select Game:</span>
+<select ng-model="gameToFetch" ng-change="display()" ng-options="g for g in game_names"></select>
+--></div>
+<h3 style='margin-left:50px; clear:both; position:relative;'>Chosen Games</h3>
+<div id="main-container">
+
+    <div id="data-table-container">
+    <!--<p ng-show="myAnswers.length == 0">You have no answers</p>-->
+      <!--<div ng-show="myAnswers.length > 0">-->
+       <div>
+
+       <!--<div class="gridStyle" ng-grid="gridOptions"></div>-->
+
+
+        <!--
+        <div>
+          Search: <input ng-model="query2">
+        </div>
+        -->
+<!--        <table id="table_left" class="table table-striped">
+            <thead>
+                <th>&nbsp</th>
+            </thead>
+            <tr>
+                <td>Interest/Pleasure</td>
+            </tr>
+            <tr>
+                <td>Hopeless/Depressed</td>
+            </tr>
+            <tr>
+                <td>Sleep</td>
+            </tr>
+            <tr>
+                <td>Energy</td>
+            </tr>
+            <tr>
+                <td>Appetite</td>
+            </tr>
+            <tr>
+                <td>Guilt</td>
+            </tr>
+            <tr>
+                <td>Concentration</td>
+            </tr>
+            <tr>
+                <td>Psychomotor</td>
+            </tr>
+            <tr>
+                <td>Self Harm</td>
+            </tr>
+
+        </table> -->
+
+    </div>
+    <div id="table_right_container">
+        <table id="table_right" class="table  table-bordered">
+          <thead>
+            <tr>
+
+              <th ng-repeat="answer in myAnswers" ng-style="{'background-color':answer.color}">
+                {{ answer.date }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr>
+              <td ng-repeat="answer in myAnswers" ng-class="{'warningColor': answer.answerValues[0]>2}">
+                {{ answer.answerValues[0] }}
+              </td>
+          </tr>
+          <tr>
+
+              <td ng-repeat="answer in myAnswers" ng-class="{'warningColor': answer.answerValues[1]>2}">
+                {{ answer.answerValues[1] }}
+              </td>
+          </tr>
+          <tr>
+
+              <td ng-repeat="answer in myAnswers" ng-class="{'warningColor': answer.answerValues[2]>2}">
+                {{ answer.answerValues[2] }}
+              </td>
+          </tr>
+          <tr>
+
+              <td ng-repeat="answer in myAnswers" ng-class="{'warningColor': answer.answerValues[3]>2}">
+                {{ answer.answerValues[3] }}
+              </td>
+          </tr>
+          <tr>
+              <td ng-repeat="answer in myAnswers" ng-class="{'warningColor': answer.answerValues[4]>2}">
+                {{ answer.answerValues[4] }}
+              </td>
+          </tr>
+          <tr>
+
+              <td ng-repeat="answer in myAnswers" ng-class="{'warningColor': answer.answerValues[5]>2}">
+                {{ answer.answerValues[5] }}
+              </td>
+          </tr>
+          <tr>
+
+              <td ng-repeat="answer in myAnswers" ng-class="{'warningColor': answer.answerValues[6]>2}">
+                {{ answer.answerValues[6] }}
+              </td>
+          </tr>
+          <tr>
+
+              <td ng-repeat="answer in myAnswers" ng-class="{'warningColor': answer.answerValues[7]>2}">
+                {{ answer.answerValues[7] }}
+              </td>
+          </tr>
+          <tr>
+
+              <td ng-repeat="answer in myAnswers" ng-class="{'warningColor': answer.answerValues[8]>2}">
+                {{ answer.answerValues[8] }}
+              </td>
+          </tr>
+          </tbody>
+
+        </table>
+
+      </div>
+    </div>
+
+
+
+    <!--
+    <div class="row-fluid">
+      </br>
+      </br>
+      <button class="btn" ng-click="logout()">Logout</button>
+    </div>
+    -->
+</div>
+
+<!--<h3 style='margin-left:50px; margin-top:30px;'>Summary Chart</h3>
+<div id="chart-container"></div> -->

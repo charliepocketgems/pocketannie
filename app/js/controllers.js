@@ -81,6 +81,35 @@ function LoginCtrl($scope, $location, ParseService) {
 LoginCtrl.$inject = ['$scope', '$location', 'ParseService']
 
 /**
+* Empty Game select controller
+*/
+function GameSelectCtrl($scope, $location, ParseService) {
+     $scope.getGameNames = function() {
+	console.log('Inside getGameNames');
+	$scope.game_names = [];
+	ParseService.getGames(function(results) {
+	   $scope.$apply(function() {
+		for (var i=0; i<results.length; i++)
+		{
+		    var game_name = results[i].get('game');
+		    if($scope.game_names.indexOf(game_name) == -1) {
+			$scope.game_names.push(game_name);
+		    }
+		    //$scope.game_names[i] = results[i].get('game');
+		}
+		console.log($scope.game_names);
+	   })
+	});	
+     }
+     $scope.suggest = function() {
+	if($scope.g_name=='') $('p').hide();
+	else $('p').show();
+     }
+     $scope.getGameNames();
+}
+GameSelectCtrl.$inject = ['$scope', '$location', 'ParseService']
+
+/**
  * Main controller for the app
  */
 function MainCtrl($scope, $location, ParseService) {

@@ -17,7 +17,8 @@ angular.module('pocketAnnieAppServices', ['ngResource'])
     // Define parse model and collection for Answer records
     var Answer = Parse.Object.extend("Answer");
     var AnswerCollection = Parse.Collection.extend({ model:Answer });
-
+    var Games = Parse.Object.extend("GameMonthly");
+    var GamesCollection = Parse.Collection.extend({model:Games });
 
     /**
      * ParseService Object
@@ -144,6 +145,19 @@ angular.module('pocketAnnieAppServices', ['ngResource'])
         */
       },
 
+      getGames : function getGames(callback) {
+        var query = new Parse.Query(Games);
+	query.limit(1000);
+        query.descending("installs");
+        query.find({
+          success : function(results) {
+            callback(results);
+          },  
+          error: function(error) {
+            alert("Error: " + error.message);
+	  }
+	});
+      },  
 
 
       // Get current logged in user

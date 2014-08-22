@@ -7,6 +7,7 @@ angular.module('pocketannie', ['ngRoute', 'ngGrid', 'pocketAnnieAppServices', 'u
   config(['$routeProvider', function($routeProvider) {
   $routeProvider.
   	  when('/dashboard', {templateUrl: 'partials/main-dash.html',   controller: MainCtrl}).
+      when('/select', {templateUrl:'partials/game-choose.html', controller: GameSelectCtrl}).
       when('/game', {templateUrl:'partials/game-dash.html', controller: GameDashCtrl}).
       when('/game/:param1', {templateUrl:'partials/game-dash.html', controller: GameDashCtrl}).
   	  //when('/add', {templateUrl: 'partials/add-book.html',   controller: MainCtrl}).
