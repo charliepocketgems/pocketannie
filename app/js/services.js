@@ -64,26 +64,7 @@ angular.module('pocketAnnieAppServices', ['ngResource'])
         //query.
       },
 
-        /*
-      // Get all books belonging to logged in user
-      getMyBooks : function getMyBooks(callback) {
-        // Create a new Parse Query to search Book records by ownerid
-        var query = new Parse.Query(Book);
-        query.equalTo("owner", loggedInUser.get('username'));
-        // use the find method to retrieve all books
-        query.find({
-          success : function(results) {
-            for (var i=0; i<results.length; i++)
-            { 
-              myBooks[i]  = results[i].get('name');
-            }
-            callback(results);
-          },
-          error: function(error) {
-            alert("Error: " + error.message);
-          }
-        });
-      },*/
+
 
       getAvgInstalls : function getRequests(callback, gamename, device, country) {
         var query = new Parse.Query(GameMetrics);
@@ -97,7 +78,7 @@ angular.module('pocketAnnieAppServices', ['ngResource'])
 
         query.find({
             success : function(results) {
-                console.log(results);
+                //console.log(results);
                 callback(results);
                 //console.log(results);
             },
@@ -105,76 +86,7 @@ angular.module('pocketAnnieAppServices', ['ngResource'])
                 alert("Error: " + error.message);
             }
         });
-      },
-
-      // Get all of current user's answers
-      getAnswers : function getRequests(userToFetch, callback) {
-
-        var query = new Parse.Query(Answer);
-        var userToFetch = 'kathleen.crosier@gmail.com';
-        var dateLimit = new Date("February 11, 2014 00:00:00");
-
-        query.equalTo("userid", userToFetch);
-        query.greaterThanOrEqualTo("createdAt", dateLimit)
-        //query.containedIn("book", myAnswers);
-        // use the find method to retrieve all requests
-        query.ascending("createdAt");
-        query.find({
-            success : function(results) {
-                console.log('fetched answers!');
-                console.log(results.length + ' answers retrieved for ' + userToFetch);
-                //console.log(results);
-                callback(results);
-            },
-            error: function(error) {
-                alert("Error: " + error.message);
-            }
-        });
-
-
-
-
-
-          /*
-
-        if (myAnswers.length == 0) {
-          query = new Parse.Query(Answer);
-          //query.equalTo("owner", loggedInUser.get('username'));
-          // use the find method to retrieve all books
-          query.find({
-            success : function(results) {
-
-
-
-
-              // Create a new Parse Query to search requests records by userid
-              query = new Parse.Query(Answer);
-              query.equalTo("userid", userToFetch);
-              query.greaterThanOrEqualTo("createdAt", dateLimit)
-              //query.containedIn("book", myAnswers);
-              // use the find method to retrieve all requests
-              query.find({
-                success : function(results) {
-                   console.log('fetched answers!');
-                   console.log(results.length + ' answers retrieved for ' + userToFetch);
-                   console.log(results);
-                  callback(results);
-                },
-                error: function(error) {
-                  alert("Error: " + error.message);
-                }
-              });
-            },
-            error: function(error) {
-              alert("Error: " + error.message);
-            }
-          });
-        }
-        */
       }
-
-
-
 
 
     };

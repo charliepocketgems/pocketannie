@@ -11,17 +11,18 @@
  * @constructor
  */
 
-function TypeaheadCtrl($scope, $http, ParseService) {
+function TypeaheadCtrl($scope, $location, ParseService) {
 
   $scope.selected = undefined;
-  //$scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
-  // Any function returning a promise object can be used to load values asynchronously
+  $scope.getGame = function ( selected ) {
+    $location.path( '/game/' + encodeURIComponent(selected));
+  };
   ParseService.getGameTitles(function(results) {
         //console.log(results);
         $scope.games=results;
     });
 }
-TypeaheadCtrl.$inject = ['$scope', '$http', 'ParseService']
+TypeaheadCtrl.$inject = ['$scope', '$location', 'ParseService']
 
 
 /**
@@ -29,16 +30,6 @@ TypeaheadCtrl.$inject = ['$scope', '$http', 'ParseService']
  */
 function AppRankCtrl($scope, $routeParams, $location, ParseService) {
 
-    /*
-    // Perform user login using back-end service
-  $scope.login = function() {
-    ParseService.login($scope.login_username, $scope.login_password, function(user) {
-            // When service call is finished, navigate to items page
-            //console.log(user);
-            $location.path('/dashboard');
-        });
-  }
-*/
     $scope.init = function() {
 
         //$scope.user = ParseService.getUser();
@@ -246,13 +237,17 @@ function GameDashCtrl($scope, $routeParams, $location, ParseService) {
 */
     $scope.init = function() {
 
+        $scope.game = "";
         //$scope.user = ParseService.getUser();
         //if($scope.user) {
         //    $location.path('/dashboard');
         //}
         if ($routeParams.param1) {
-            $scope.gameName =$routeParams.param1;
+            $scope.game =$routeParams.param1;
+
         }
+
+
 
        // $scope.getAvgInstalls = ParseService.getAvgInstalls();
 
@@ -549,7 +544,7 @@ $('#container1').highcharts({
     $scope.init();
 
 }
-GameDashCtrl.$inject = ['$scope', '$routeParams', '$location', 'ParseService', ];
+GameDashCtrl.$inject = ['$scope', '$routeParams', '$location', 'ParseService'];
 
 
 /**
