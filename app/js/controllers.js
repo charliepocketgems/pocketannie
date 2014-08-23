@@ -235,6 +235,7 @@ function GameDashCtrl($scope, $routeParams, $location, ParseService) {
         });
 	}
 */
+
     $scope.init = function() {
 
         $scope.game = "";
@@ -243,27 +244,75 @@ function GameDashCtrl($scope, $routeParams, $location, ParseService) {
         //    $location.path('/dashboard');
         //}
         if ($routeParams.param1) {
-            $scope.game =$routeParams.param1;
+            $scope.game = $routeParams.param1;
 
         }
 
-
-
        // $scope.getAvgInstalls = ParseService.getAvgInstalls();
 
-
     }
-    $scope.getAvgInstallsfunc = function() {
-      ParseService.getAvgInstalls( function(results) {
+
+    $scope.init();
+    $scope.getAvgInstallsfunc = function(game) {
+      ParseService.getGameMetrics(game,'iphone','US', function(results) {
         $scope.$apply(function() {
           $scope.getAvgInstalls = results[0].get('avginstalls');
+          $scope.getAvgRevenue = results[0].get('avgrevenue');
+          $scope.getTotalInstalls = results[0].get('totalinstalls');
+          $scope.getTotalRevenue = results[0].get('totalrev');
+          $scope.getPublisher = results[0].get('publisher');
+
         })
       })
     }
-    $scope.getAvgInstallsfunc();
-  var yAxisMargin =30;
 
- $(function () {
+    $scope.getAvgInstallsfunc($scope.game);
+
+          $scope.getMonth = [];
+          $scope.getInstalls = [];
+          $scope.getRevenue = [];
+    $scope.getcumltv = [];
+    $scope.getfreeranks = [];
+    $scope.getgrossingranks = [];
+          $scope.dataObjects = [];
+          $scope.sortedData = [];
+          var yAxisMargin =30;
+    
+    $scope.getGameMonthlyfunc = function(game) {
+
+      ParseService.getGameMonthly(game, 'iphone', 'US', function(results) {
+        $scope.$apply(function() {
+          for (var i=0; i<results.length;i++){
+            var newDataElement = {};
+            newDataElement['month'] = results[i].get('month');
+            newDataElement['installs'] = results[i].get('installs');
+            newDataElement['rev'] = results[i].get('revenue');
+              newDataElement['cumltv'] = results[i].get('cumltv');
+              newDataElement['rankapp_installs'] = results[i].get('rankapp_installs');
+              newDataElement['rankapp_revenue'] = results[i].get('rankapp_revenue');
+            $scope.getInstalls.push(parseInt(results[i].get('installs'),10));
+            $scope.getRevenue.push(results[i].get('revenue'));
+            $scope.getcumltv.push(results[i].get('cumltv'));
+            $scope.getfreeranks.push(results[i].get('rankapp_installs'));
+            $scope.getgrossingranks.push(results[i].get('rankapp_revenue'));
+            $scope.getMonth.push(results[i].get('month'));
+            $scope.dataObjects.push(newDataElement);
+          }
+          // console.log($scope.getInstalls);
+          // console.log($scope.getRevenue);
+          // console.log($scope.getMonth);
+          //console.log($scope.dataObjects);
+
+          $scope.sortedData = _.sortBy($scope.dataObjects, function(obj){ 
+            var month = obj.month.match(/[0-9]+/);
+            //console.log(month);
+            var year = obj.month.substring(obj.month.length-4);
+            
+            return new Date(parseInt(year), parseInt(month)+1)});
+//          console.log($scope.sortedData);
+    
+
+    $(function () {
     $('#container').highcharts({
         chart: {
             type: 'column'
@@ -280,9 +329,16 @@ function GameDashCtrl($scope, $routeParams, $location, ParseService) {
                 }
         },
         xAxis: {
-            categories: ['Jan-14', 'Feb-14', 'Mar-14', 'Ap-14', 'May-14'],
+            categories: _.map($scope.sortedData, function(obj) { return obj.month; }),
             tickColor: '#FFFFFF',
-            gridLineWidth: 0
+            gridLineWidth: 0,
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
         },
         yAxis: {
             min: 0,
@@ -329,8 +385,8 @@ function GameDashCtrl($scope, $routeParams, $location, ParseService) {
             }
         },
         series: [{
-            name: 'John',
-            data: [5, 3, 4, 7, 2],
+            name: 'Installs',
+            data: _.map($scope.sortedData, function(obj) { return parseInt(obj.installs); }),
             color: '#B0B0B0'
         }]
     });
@@ -351,9 +407,16 @@ $('#container3').highcharts({
                 }
         },
         xAxis: {
-            categories: ['Jan-14', 'Feb-14', 'Mar-14', 'Ap-14', 'May-14'],
+            categories:_.map($scope.sortedData, function(obj) { return obj.month; }),
             tickColor: '#FFFFFF',
-            gridLineWidth: 0
+            gridLineWidth: 0,
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
         },
         yAxis: {
             min: 0,
@@ -400,8 +463,8 @@ $('#container3').highcharts({
             }
         },
         series: [{
-            name: 'John',
-            data: [5, 3, 4, 7, 2],
+            name: 'cumltv',
+            data: _.map($scope.sortedData, function(obj) { return parseInt(obj.cumltv); }),
             color: '#B0B0B0'
         }]
     });
@@ -417,14 +480,21 @@ $('#container1').highcharts({
                     fontWeight: 'unbold',
                     color: '#505050'
                 }
-              },
-                xAxis: {
-            categories: ['Jan-14', 'Feb-14', 'Mar-14', 'Ap-14', 'May-14'],
-            tickColor: '#FFFFFF',
-            gridLineWidth: 0
-        },
+            },
+            xAxis: {
+                    categories: _.map($scope.sortedData, function(obj) { return obj.month; }),
+                    tickColor: '#FFFFFF',
+                    gridLineWidth: 0,
+                        labels: {
+                        rotation: -45,
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
+                    }
+            },
         yAxis: {
-            min: 0,
+            min: 1,
             gridLineWidth: 0,
             title: {
                 text: 'ranks',
@@ -436,7 +506,8 @@ $('#container1').highcharts({
                     fontSize: '14px',
                     color: '#C0C0C0'  
                 }
-            }
+            },
+            reversed:true
         },
         legend: {
             layout: 'vertical',
@@ -452,14 +523,14 @@ $('#container1').highcharts({
         },
         series: [{
             name: 'Free ranks',
-            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
+            data: _.map($scope.sortedData, function(obj) { return parseInt(obj.rankapp_installs); }),
             color: '#CC6600',
             marker: {
                     enabled: false
                 }
         }, {
             name: 'Grossing ranks',
-            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5],
+            data: _.map($scope.sortedData, function(obj) { return parseInt(obj.rankapp_revenue); }),
             color: '#330066',
             marker: {
                     enabled: false
@@ -483,9 +554,16 @@ $('#container1').highcharts({
                 }
         },
         xAxis: {
-            categories: ['Jan-14', 'Feb-14', 'Mar-14', 'Ap-14', 'May-14'],
+            categories: _.map($scope.sortedData, function(obj) { return obj.month; }),
             tickColor: '#FFFFFF',
-            gridLineWidth: 0
+            gridLineWidth: 0,
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
         },
         yAxis: {
             min: 0,
@@ -532,16 +610,24 @@ $('#container1').highcharts({
             }
         },
         series: [{
-            name: 'John',
-            data: [5, 3, 4, 7, 2],
+            name: 'Revenue',
+            data: _.map($scope.sortedData, function(obj) { return obj.rev; }),
             color: '#B0B0B0'
         }]
     });
 
  });
 
+        })
+      })
+    }
+    console.log('game '+ $scope.game);
+    $scope.getGameMonthlyfunc($scope.game);
 
-    $scope.init();
+
+
+
+
 
 }
 GameDashCtrl.$inject = ['$scope', '$routeParams', '$location', 'ParseService'];

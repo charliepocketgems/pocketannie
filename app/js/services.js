@@ -19,6 +19,7 @@ angular.module('pocketAnnieAppServices', ['ngResource'])
     // Define parse model and collection for Answer records
     var Answer = Parse.Object.extend("Answer");
     var GameMetrics = Parse.Object.extend("GameMetrics");
+    var GameMonthly3 = Parse.Object.extend("GameMonthly3");
     var AnswerCollection = Parse.Collection.extend({ model:Answer });
 
 
@@ -66,11 +67,10 @@ angular.module('pocketAnnieAppServices', ['ngResource'])
 
 
 
-      getAvgInstalls : function getRequests(callback, gamename, device, country) {
-        var query = new Parse.Query(GameMetrics);
-        var device = 'iphone';
-        var country = 'JP'
-        var gamename = 'Sky Adventure';
+      getGameMetrics : function getRequests(gamename, device, country, callback) {
+        console.log('the game is ' + gamename);
+
+          var query = new Parse.Query(GameMetrics);
 
         query.equalTo("device", device);
         query.equalTo("country", country);
@@ -78,7 +78,26 @@ angular.module('pocketAnnieAppServices', ['ngResource'])
 
         query.find({
             success : function(results) {
-                //console.log(results);
+                callback(results);
+            },
+            error: function(error) {
+                alert("Error: " + error.message);
+            }
+        });
+      },
+
+      getGameMonthly : function getRequests(gamename, device, country, callback) {
+
+        var query = new Parse.Query(GameMonthly3);
+
+        query.equalTo("device", device);
+        query.equalTo("country", country);
+        query.equalTo("game", gamename);
+        query.ascending("month");
+
+        query.find({
+            success : function(results) {
+                console.log(results);
                 callback(results);
                 //console.log(results);
             },
@@ -87,6 +106,8 @@ angular.module('pocketAnnieAppServices', ['ngResource'])
             }
         });
       }
+
+
 
 
     };
