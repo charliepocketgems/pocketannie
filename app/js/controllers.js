@@ -232,21 +232,56 @@ function GameDashCtrl($scope, $routeParams, $location, ParseService) {
             $scope.gameName =$routeParams.param1;
         }
 
-       // $scope.getAvgInstalls = ParseService.getAvgInstalls();
-
 
     }
     $scope.getAvgInstallsfunc = function() {
-      ParseService.getAvgInstalls( function(results) {
+      ParseService.getGameMetrics( function(results) {
         $scope.$apply(function() {
           $scope.getAvgInstalls = results[0].get('avginstalls');
+          $scope.getAvgRevenue = results[0].get('avgrevenue');
+          $scope.getTotalInstalls = results[0].get('totalinstalls');
+          $scope.getTotalRevenue = results[0].get('totalrev');
         })
       })
     }
-    $scope.getAvgInstallsfunc();
-  var yAxisMargin =30;
 
- $(function () {
+    $scope.getAvgInstallsfunc();
+
+          $scope.getMonth = [];
+          $scope.getInstalls = [];
+          $scope.getRevenue = [];
+          $scope.dataObjects = [];
+          $scope.sortedData = [];
+          var yAxisMargin =30;
+    
+    $scope.getGameMonthlyfunc = function() {
+      ParseService.getGameMonthly( function(results) {
+        $scope.$apply(function() {
+          for (var i=0; i<results.length;i++){
+            var newDataElement = {};
+            newDataElement['month'] = results[i].get('month');
+            newDataElement['installs'] = results[i].get('installs');
+            newDataElement['rev'] = results[i].get('rev');
+            $scope.getInstalls.push(parseInt(results[i].get('installs'),10));
+            $scope.getRevenue.push(results[i].get('rev'));
+            $scope.getMonth.push(results[i].get('month'));
+            $scope.dataObjects.push(newDataElement);
+          }
+          // console.log($scope.getInstalls);
+          // console.log($scope.getRevenue);
+          // console.log($scope.getMonth);
+          //console.log($scope.dataObjects);
+
+          $scope.sortedData = _.sortBy($scope.dataObjects, function(obj){ 
+            var month = obj.month.match(/[0-9]+/);
+            //console.log(month);
+            var year = obj.month.substring(obj.month.length-4);
+            
+            return new Date(parseInt(year), parseInt(month)+1)});
+          console.log($scope.sortedData);
+    
+
+    $(function () {
     $('#container').highcharts({
         chart: {
             type: 'column'
@@ -263,7 +298,7 @@ function GameDashCtrl($scope, $routeParams, $location, ParseService) {
                 }
         },
         xAxis: {
-            categories: ['Jan-14', 'Feb-14', 'Mar-14', 'Ap-14', 'May-14'],
+            categories: _.map($scope.sortedData, function(obj) { return obj.month; }),
             tickColor: '#FFFFFF',
             gridLineWidth: 0
         },
@@ -312,8 +347,8 @@ function GameDashCtrl($scope, $routeParams, $location, ParseService) {
             }
         },
         series: [{
-            name: 'John',
-            data: [5, 3, 4, 7, 2],
+            name: 'Installs',
+            data: _.map($scope.sortedData, function(obj) { return parseInt(obj.installs); }),
             color: '#B0B0B0'
         }]
     });
@@ -466,7 +501,7 @@ $('#container1').highcharts({
                 }
         },
         xAxis: {
-            categories: ['Jan-14', 'Feb-14', 'Mar-14', 'Ap-14', 'May-14'],
+            categories: _.map($scope.sortedData, function(obj) { return obj.month; }),
             tickColor: '#FFFFFF',
             gridLineWidth: 0
         },
@@ -515,13 +550,21 @@ $('#container1').highcharts({
             }
         },
         series: [{
-            name: 'John',
-            data: [5, 3, 4, 7, 2],
+            name: 'Revenue',
+            data: _.map($scope.sortedData, function(obj) { return obj.rev; }),
             color: '#B0B0B0'
         }]
     });
 
  });
+
+        })
+      })
+    }
+
+    $scope.getGameMonthlyfunc();
+
+
 
 
     $scope.init();
