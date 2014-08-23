@@ -554,21 +554,13 @@ function GameSelectCtrl($scope, $location, ParseService) {
      $scope.game_names = [];
      $scope.chosen_games = [];
      $scope.getGameNames = function() {
-	console.log('Inside getGameNames');
-	//$scope.game_names = [];
-	ParseService.getGameTitles(function(results) {
-	   $scope.$apply(function() {
-		for (var i=0; i<results.length; i++)
-		{
-		    var game_name = results[i].get('game');
-		    if($scope.game_names.indexOf(game_name) == -1) {
-			$scope.game_names.push(game_name);
-		    }
-		    //$scope.game_names[i] = results[i].get('game');
-		}
-		console.log($scope.game_names);
-	   })
-	});	
+	    console.log('Inside getGameNames');
+	    //$scope.game_names = [];
+	    ParseService.getGameTitles(function(results) {
+	        $scope.game_names = results;
+            //console.log(results);
+
+	    });
      }
      /*$scope.suggest = function() {
 	if($scope.g_name=='') $('p').hide();
@@ -577,12 +569,12 @@ function GameSelectCtrl($scope, $location, ParseService) {
      $scope.getGameNames();
      $scope.g_names = $scope.game_names;
      $scope.suggest = function(typed) {
-	for( var i=0; i< $scope.game_names.length; i++) {
-	{
-	    if($scope.game_names[i].indexOf(typed) == 0) {
-	    	$scope.g_names.push($scope.game_names[i]);
-	    }
-	}
+        for( var i=0; i< $scope.game_names.length; i++) {
+        {
+            if($scope.game_names[i].indexOf(typed) == 0) {
+                $scope.g_names.push($scope.game_names[i]);
+            }
+        }
      }
    }
 
